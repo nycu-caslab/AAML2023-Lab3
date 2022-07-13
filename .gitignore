@@ -1,0 +1,16 @@
+INCA_libs/
+irun*
+ncverilog*
+*.swp
+build/
+novas*
+*.vcd
+*.fsdb
+nWave*
+vfastLog*
+*.mti
+*.mpf
+*.wlf
+work/
+coverage
+*.drawio
