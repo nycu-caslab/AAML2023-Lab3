@@ -51,28 +51,4 @@ output [127:0]  C_data_out;
 //* Implement your design here
 
 
-// assign busy = 1'b0;
-reg [7:0] counter;
-
-
-always@(posedge clk or negedge rst_n) begin
-    if(!rst_n) begin
-        busy <= 1'b0;
-        counter <= 'd0;
-    end else begin
-        counter <= (counter == 'd20) ? 'd0 : counter + 1;
-        busy <= (counter == 'd20) ? 1'b0 : 1'b1;
-    end
-end
-
-
-
-
-
-
-
-
-
-
-
 endmodule
