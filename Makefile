@@ -17,30 +17,33 @@ VERILOG=irun
 # Directories Declarations                                                     #
 #------------------------------------------------------------------------------#
 CUR_DIR=$(PWD)
-TB_DIR=tb
-BUILD_DIR=build
-SRC_DIR=src
-INC_DIR=inc
+TB_DIR=TESTBENCH
+RTL_DIR=RTL
 
-test1:
-	cd $(TB_DIR) && python3 matmul.py inputs1
-	$(VERILOG) tb/top_tb.v \
-    +incdir+$(PWD)/$(SRC_DIR)+$(PWD)/$(TB_DIR)+$(PWD)/$(BUILD_DIR) +access+r
 
-test2:
-	cd $(TB_DIR) && python3 matmul.py inputs2
+verif1:
+	python3 data_generator.py --mode 0 --target_dir verif1 --ncases 10
+	cp verif1/input.txt $(TESTBENCH)/
 	$(VERILOG) tb/top_tb.v \
-    +incdir+$(PWD)/$(SRC_DIR)+$(PWD)/$(TB_DIR)+$(PWD)/$(BUILD_DIR) +access+r
+    +incdir+$(PWD)/$(TESTBENCH)+$(PWD)/$(RTL_DIR) +access+r
 
-test3:
-	cd $(TB_DIR) && python3 matmul.py inputs3
+verif2:
+	python3 data_generator.py --mode 1 --target_dir verif2 --ncases 10
+	cp verif1/input.txt $(TESTBENCH)/
 	$(VERILOG) tb/top_tb.v \
-    +incdir+$(PWD)/$(SRC_DIR)+$(PWD)/$(TB_DIR)+$(PWD)/$(BUILD_DIR) +access+r
+    +incdir+$(PWD)/$(TESTBENCH)+$(PWD)/$(RTL_DIR) +access+r
 
-monster:
-	cd $(TB_DIR) && python3 matmul.py monster
+verif3:
+	python3 data_generator.py --mode 2 --target_dir verif3 --ncases 10
+	cp verif1/input.txt $(TESTBENCH)/
 	$(VERILOG) tb/top_tb.v \
-    +incdir+$(PWD)/$(SRC_DIR)+$(PWD)/$(TB_DIR)+$(PWD)/$(BUILD_DIR) +access+r
+    +incdir+$(PWD)/$(TESTBENCH)+$(PWD)/$(RTL_DIR) +access+r
+
+real:
+	python3 data_generator.py --mode 3 --target_dir verif4 --ncases 10
+	cp verif1/input.txt $(TESTBENCH)/
+	$(VERILOG) tb/top_tb.v \
+    +incdir+$(PWD)/$(TESTBENCH)+$(PWD)/$(RTL_DIR) +access+r
 
 clean:
-	rm -rf build
+	rm -rf verif*

@@ -14,3 +14,4 @@ vfastLog*
 work/
 coverage
 *.drawio
+test*
