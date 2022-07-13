@@ -9,7 +9,6 @@
 `timescale 1ns/10ps
 `include "PATTERN.v"
 `include "TPU.v"
-`define RTL
 
 module TESTBENCH;
 
@@ -23,15 +22,15 @@ wire [7:0]      M;
 wire [7:0]      N;
 wire            busy;
 wire            A_wr_en;
-wire [31:0]     A_index;
+wire [15:0]     A_index;
 wire [31:0]     A_data_in;
 wire [31:0]     A_data_out;
 wire            B_wr_en;
-wire [31:0]     B_index;
+wire [15:0]     B_index;
 wire [31:0]     B_data_in;
 wire [31:0]     B_data_out;
 wire            C_wr_en;
-wire [31:0]     C_index;
+wire [15:0]     C_index;
 wire [127:0]    C_data_in;
 wire [127:0]    C_data_out;
 
@@ -40,11 +39,11 @@ initial begin
     `ifdef RTL
         $fsdbDumpfile("TPU.fsdb");
         $fsdbDumpvars(0,"+mda");
-    `elsif GATE
-        // $sdf_annotate("TOF_SYN.sdf",U_TOF);
-        // $fsdbDumpfile("TOF.fsdb");
+    // `elsif GATE
+        // $sdf_annotate("TPU_SYN.sdf",U_TPU);
+        // $fsdbDumpfile("TPU.fsdb");
         // $fsdbDumpvars(0,"+mda");
-    `elsif POST
+    // `elsif POST
         // $sdf_annotate("CHIP.sdf", U_CHIP);
         // $fsdbDumpfile("CHIP.fsdb");
         // $fsdbDumpvars(0,"+mda");

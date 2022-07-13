@@ -85,6 +85,8 @@ def gen_one_case(i, in_fd=None, c_fd=None, all_one=False, mode=0, shape_range=(4
         Am = np.random.randint(val_range[0], high=val_range[1], size=(M, K), dtype=np.uint8)
         Bm = np.random.randint(val_range[0], high=val_range[1], size=(K, N), dtype=np.uint8)
 
+
+    Cm = np.matmul(Am, Bm)
     AmT = Am.transpose()
 
     # print(K, M, N)
@@ -94,6 +96,7 @@ def gen_one_case(i, in_fd=None, c_fd=None, all_one=False, mode=0, shape_range=(4
     write_config(in_fd, K, M, N)
     write_matrix(in_fd, AmT)
     write_matrix(in_fd, Bm)
+    write_matrix(in_fd, Cm)
 
 
     c_fd.write("----------------------------------------------\n")
@@ -102,6 +105,7 @@ def gen_one_case(i, in_fd=None, c_fd=None, all_one=False, mode=0, shape_range=(4
     c_fd.write(f"K: {K:3d} M: {M:3d} N:{N:3d}\n")
     write_readable(c_fd, AmT, desc="A: \n")
     write_readable(c_fd, Bm, desc ="B: \n")
+    write_readable(c_fd, Cm, desc="C: \n")
 
 
 def main():
