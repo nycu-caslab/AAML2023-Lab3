@@ -69,7 +69,7 @@ def write_readable(fd, m, desc=""):
 
 def write_config(fd, K, M, N):
 
-    fd.write("{0:3d} {1:3d} {2:3d}".format( K, M, N))
+    fd.write("{0:2x} {1:2x} {2:2x}".format( K, M, N))
 
 
 def gen_one_case(i, in_fd=None, c_fd=None, all_one=False, mode=0, shape_range=(4, 256), val_range=(0, 256)):
