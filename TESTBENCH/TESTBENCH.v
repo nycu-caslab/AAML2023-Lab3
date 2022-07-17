@@ -37,8 +37,8 @@ wire [127:0]    C_data_out;
 
 initial begin
     `ifdef RTL
-        $fsdbDumpfile("TPU.fsdb");
-        $fsdbDumpvars(0,"+mda");
+        // $fsdbDumpfile("TPU.fsdb");
+        // $fsdbDumpvars(0,"+mda");
     // `elsif GATE
         // $sdf_annotate("TPU_SYN.sdf",U_TPU);
         // $fsdbDumpfile("TPU.fsdb");

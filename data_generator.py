@@ -163,6 +163,8 @@ def main():
     in_fd = open(input_file, "w")
     legible_fd = open(leg_file, "w")
 
+    in_fd.write(f"{ncases:d}")
+
     for n in range(ncases):
         gen_one_case(n, in_fd, legible_fd, all_one=all_one, mode=mode, shape_range=(4, 255), val_range=(0, 255))
 

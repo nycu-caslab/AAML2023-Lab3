@@ -58,9 +58,10 @@ input      [127:0]  C_data_in;
 output     [127:0]  C_data_out;
 
 
-parameter PATNUM = 1;
+// parameter PATNUM = 1000;
 
 
+integer PATNUM;
 
 integer cycles;
 integer total_cycles;
@@ -153,6 +154,9 @@ initial begin
 
     in_fd = $fopen("./TESTBENCH/input.txt", "r");
 
+    //* PATNUM
+    $fscanf(in_fd, "%d", PATNUM);
+
     for(patcount = 0; patcount < PATNUM; patcount = patcount + 1) begin
 
         //* read input
@@ -181,6 +185,7 @@ initial begin
 
         $display("\033[0;34mPASS PATTERN NO.%4d,\033[m \033[0;32m Cycles: %3d\033[m", patcount ,cycles);
         total_cycles = total_cycles + cycles;
+        cycles = 0;
         repeat(5) @(negedge clk);
     end
 
@@ -224,7 +229,7 @@ task read_A_Matrix; begin
     for(i=0;i<nrow;i=i+1) begin
         $fscanf(in_fd, "%h %h %h %h", rbuf[3], rbuf[2], rbuf[1], rbuf[0]);
         gbuff_A.gbuff[i] = {rbuf[3], rbuf[2], rbuf[1], rbuf[0]};
-        $display("A[%d] = %8h", i, gbuff_A.gbuff[i]);
+        // $display("A[%d] = %8h", i, gbuff_A.gbuff[i]);
     end
 
 end endtask
@@ -237,7 +242,7 @@ task read_B_Matrix; begin
     for(i=0;i<nrow;i=i+1) begin
         $fscanf(in_fd, "%h %h %h %h", rbuf[3], rbuf[2], rbuf[1], rbuf[0]);
         gbuff_B.gbuff[i] = {rbuf[3], rbuf[2], rbuf[1], rbuf[0]};
-        $display("B[%d] = %8h", i, gbuff_A.gbuff[i]);
+        // $display("B[%d] = %8h", i, gbuff_A.gbuff[i]);
     end
 
 end endtask
@@ -250,7 +255,7 @@ task read_golden; begin
     for(i=0;i<nrow;i=i+1) begin
         $fscanf(in_fd, "%h %h %h %h", goldenbuf[3], goldenbuf[2], goldenbuf[1], goldenbuf[0]);
         GOLDEN[i] = {goldenbuf[3], goldenbuf[2], goldenbuf[1], goldenbuf[0]};
-        $display("GOLDEN[%d] = %8h %8h %8h %8h", i, GOLDEN[i][127:96],  GOLDEN[i][95:64],  GOLDEN[i][63:32],  GOLDEN[i][31:0]);
+        // $display("GOLDEN[%d] = %8h %8h %8h %8h", i, GOLDEN[i][127:96],  GOLDEN[i][95:64],  GOLDEN[i][63:32],  GOLDEN[i][31:0]);
     end
 
 end endtask
@@ -261,7 +266,7 @@ task wait_finished; begin
     cycles = 0;
     while(busy === 1'b1) begin
         cycles = cycles + 1;
-        if(cycles >= 100000) begin
+        if(cycles >= 1000000) begin
             exceed_1000000_cycles;
         end
         @(negedge clk);
@@ -274,7 +279,7 @@ end endtask
 
 task exceed_1000000_cycles; begin
     $display ("------------------------------------------------------------------------------------");
-    $display ("                               exceed 100000 cycles, (%d) wrong                      ", cycles);
+    $display ("                               exceed 1000000 cycles, (%d) wrong                      ", cycles);
     $display ("------------------------------------------------------------------------------------");
     repeat(10)@(negedge clk);
     $finish;
