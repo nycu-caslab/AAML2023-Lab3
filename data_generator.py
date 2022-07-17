@@ -33,6 +33,29 @@ def write_matrix(fd, m):
 
     return malign
 
+def write_output_matrix(fd, m):
+    r, c = m.shape
+
+
+    calign = int((c+3)/4)*4
+
+    malign = np.zeros((r, calign), dtype=np.uint32)
+
+    malign[:, 0:c] = m
+    cptr = 0
+
+    fd.write("\n")
+    for cptr in range(0, calign, 4):
+        for dr in range(r):
+            for n in range(4):
+                # t = f"{malign[dr, cptr+n]}"
+                fd.write("{0:8x} ".format(malign[dr, cptr+n]))
+            fd.write('\n')
+            
+    fd.write("\n")
+
+    return malign
+
 
 def write_readable(fd, m, desc=""):
     r, c = m.shape
@@ -40,7 +63,7 @@ def write_readable(fd, m, desc=""):
     fd.write(desc)
     for dr in range(r):
         for dc in range(c):
-            fd.write("{0:3d} ".format( m[dr, dc]))
+            fd.write("{0:6d} ".format( m[dr, dc]))
         fd.write("\n")
     fd.write("\n")
 
@@ -86,7 +109,7 @@ def gen_one_case(i, in_fd=None, c_fd=None, all_one=False, mode=0, shape_range=(4
         Bm = np.random.randint(val_range[0], high=val_range[1], size=(K, N), dtype=np.uint8)
 
 
-    Cm = np.matmul(Am, Bm)
+    Cm = np.matmul(Am, Bm, dtype=np.uint32)
     AmT = Am.transpose()
 
     # print(K, M, N)
@@ -96,14 +119,14 @@ def gen_one_case(i, in_fd=None, c_fd=None, all_one=False, mode=0, shape_range=(4
     write_config(in_fd, K, M, N)
     write_matrix(in_fd, AmT)
     write_matrix(in_fd, Bm)
-    write_matrix(in_fd, Cm)
+    write_output_matrix(in_fd, Cm)
 
 
     c_fd.write("----------------------------------------------\n")
     c_fd.write(f"                 Case {i}                    \n")
     c_fd.write("----------------------------------------------\n")
     c_fd.write(f"K: {K:3d} M: {M:3d} N:{N:3d}\n")
-    write_readable(c_fd, AmT, desc="A: \n")
+    write_readable(c_fd, Am, desc="A: \n")
     write_readable(c_fd, Bm, desc ="B: \n")
     write_readable(c_fd, Cm, desc="C: \n")
 
