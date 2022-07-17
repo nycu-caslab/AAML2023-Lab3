@@ -69,10 +69,10 @@ def write_readable(fd, m, desc=""):
 
 def write_config(fd, K, M, N):
 
-    fd.write("{0:2x} {1:2x} {2:2x}".format( K, M, N))
+    fd.write("{0:3x} {1:3x} {2:3x}".format( K, M, N))
 
 
-def gen_one_case(i, in_fd=None, c_fd=None, all_one=False, mode=0, shape_range=(4, 256), val_range=(0, 256)):
+def gen_one_case(i, in_fd=None, c_fd=None, all_one=False, mode=0, shape_range=(4, 255), val_range=(0, 255)):
 
     if in_fd == None:
         print("input file descriptor is null")
@@ -164,7 +164,7 @@ def main():
     legible_fd = open(leg_file, "w")
 
     for n in range(ncases):
-        gen_one_case(n, in_fd, legible_fd, all_one=all_one, mode=mode, shape_range=(4, 256), val_range=(0, 256))
+        gen_one_case(n, in_fd, legible_fd, all_one=all_one, mode=mode, shape_range=(4, 255), val_range=(0, 255))
 
     # K = 0
     # M = 0
