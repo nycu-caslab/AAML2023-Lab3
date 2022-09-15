@@ -267,7 +267,7 @@ task wait_finished; begin
     while(busy === 1'b1) begin
         cycles = cycles + 1;
         if(cycles >= 1000000) begin
-            exceed_1000000_cycles;
+            exceed_1500000_cycles;
         end
         @(negedge clk);
     end
@@ -277,9 +277,9 @@ end endtask
 
 
 
-task exceed_1000000_cycles; begin
+task exceed_1500000_cycles; begin
     $display ("------------------------------------------------------------------------------------");
-    $display ("                               exceed 1000000 cycles, (%d) wrong                      ", cycles);
+    $display ("                               exceed 1500000 cycles, (%d) wrong                      ", cycles);
     $display ("------------------------------------------------------------------------------------");
     repeat(10)@(negedge clk);
     $finish;
