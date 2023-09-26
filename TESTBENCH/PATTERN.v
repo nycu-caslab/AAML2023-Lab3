@@ -266,7 +266,7 @@ task wait_finished; begin
     cycles = 0;
     while(busy === 1'b1) begin
         cycles = cycles + 1;
-        if(cycles >= 1000000) begin
+        if(cycles >= 1500000) begin
             exceed_1500000_cycles;
         end
         @(negedge clk);
