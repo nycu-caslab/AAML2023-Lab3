@@ -1,7 +1,7 @@
 # AAML2023 Lab3
 
 
-Brief introduction of Lab1
+Brief introduction of Lab3
 
 
 ## Directory Structure
